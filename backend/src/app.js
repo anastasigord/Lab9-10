@@ -6,6 +6,8 @@ const app = express();
 
 app.use(express.json());
 
+app.use("/api/trains", trainRoutes);
+
 app.get("/",(_req,res)=>{
 
 res.json({
