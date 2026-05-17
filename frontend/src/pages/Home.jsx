@@ -1,44 +1,41 @@
 import { useEffect, useState } from "react";
-import TrainList from "../components/TrainList";
-import { getTrains, searchTrains } from "../services/api";
 
 export default function Home() {
   const [trains, setTrains] = useState([]);
   const [query, setQuery] = useState("");
 
   useEffect(() => {
-    loadTrains();
+    fetch("http://localhost:3000/api/trains")
+      .then(res => res.json())
+      .then(data => setTrains(data));
   }, []);
 
-  async function loadTrains() {
-    const data = await getTrains();
-    setTrains(data);
-  }
-
-  async function handleSearch(e) {
-    const value = e.target.value;
-    setQuery(value);
-
-    if (!value) {
-      loadTrains();
-      return;
-    }
-
-    const data = await searchTrains(value);
-    setTrains(data);
-  }
-
   return (
-    <div>
-      <h1>🚆 Потяги</h1>
+    <div className="container">
+
+      <h1 className="title">🚆 Railway System</h1>
 
       <input
         placeholder="Пошук..."
         value={query}
-        onChange={handleSearch}
+        onChange={(e) => setQuery(e.target.value)}
       />
 
-      <TrainList trains={trains} />
+      {trains
+        .filter(t =>
+          t.number.toLowerCase().includes(query.toLowerCase()) ||
+          t.from.toLowerCase().includes(query.toLowerCase()) ||
+          t.to.toLowerCase().includes(query.toLowerCase())
+        )
+        .map(train => (
+          <div key={train.id} className="card">
+            <h3>{train.number}</h3>
+            <p>{train.from} → {train.to}</p>
+            <p>⏰ {train.departure}</p>
+            <p>⏳ {train.duration}</p>
+          </div>
+      ))}
+
     </div>
   );
 }
