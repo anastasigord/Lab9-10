@@ -1,13 +1,10 @@
-const express = require("express");
+import express from "express";
+import trains from "../data/trains.js";
 
 const router = express.Router();
 
-const trains = require("../data/trains");
-
-router.get("/", (_req, res) => {
-
-res.json(trains);
-
+router.get("/", (req, res) => {
+  res.json(trains);
 });
 
 router.get("/search", (req, res) => {

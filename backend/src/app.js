@@ -1,23 +1,16 @@
-const trainRoutes = require("./routes/trains");
-
-const express = require("express");
+import express from "express";
+import cors from "cors";
+import trainRoutes from "./routes/trains.js";
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 app.use("/api/trains", trainRoutes);
 
-app.get("/",(_req,res)=>{
-
-res.json({
-status:"Railway backend running"
+app.get("/", (req, res) => {
+  res.json({ status: "Railway backend running" });
 });
-
-});
-
-import cors from "cors";
-
-app.use(cors());
 
 export default app;
