@@ -50,3 +50,9 @@ input {
   transform: translateY(-3px);
   background: rgba(255, 255, 255, 0.45);
 }
+
+.title {
+  text-align: center;
+  color: #5a4632;
+  margin-bottom: 20px;
+}
