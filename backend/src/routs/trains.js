@@ -22,4 +22,4 @@ router.get("/search", (req, res) => {
   res.json(result);
 });
 
-module.exports = router;
+export default router;
