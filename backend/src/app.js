@@ -1,3 +1,5 @@
+const trainRoutes = require("./routes/trains");
+
 const express = require("express");
 
 const app = express();
