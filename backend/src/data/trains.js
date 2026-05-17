@@ -29,5 +29,5 @@ duration: "4 год"
 
 ];
 
-module.exports=trains;
+export default trains;
 
