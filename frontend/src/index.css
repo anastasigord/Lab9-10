@@ -1,14 +1,7 @@
 body {
-  font-family: Arial;
-  padding: 20px;
-}
+  margin: 0;
+  font-family: Arial, sans-serif;
 
-input {
-  padding: 8px;
-  margin-bottom: 15px;
-  width: 250px;
-}
-
-div {
-  max-width: 600px;
+  background: linear-gradient(135deg, #f5e6c8, #e8d3b0);
+  min-height: 100vh;
 }
