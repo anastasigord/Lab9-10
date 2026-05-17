@@ -9,3 +9,5 @@ router.get("/", (_req, res) => {
 res.json(trains);
 
 });
+
+module.exports = router;
