@@ -9,9 +9,3 @@ export async function searchTrains(query) {
   const res = await fetch(`${BASE_URL}/trains/search?q=${query}`);
   return res.json();
 }
-
-import Home from "./pages/Home";
-
-export default function App() {
-  return <Home />;
-}
