@@ -10,30 +10,29 @@ export default function Home() {
       .then(data => setTrains(data));
   }, []);
 
+  const filtered = trains.filter(t =>
+    t.number.toLowerCase().includes(query.toLowerCase()) ||
+    t.from.toLowerCase().includes(query.toLowerCase()) ||
+    t.to.toLowerCase().includes(query.toLowerCase())
+  );
+
   return (
     <div className="container">
 
-      <h1 className="title">🚆 Railway System</h1>
+      <div className="title">Railway Ticket System</div>
 
       <input
-        placeholder="Пошук..."
+        placeholder="Search by number, city or route"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
 
-      {trains
-        .filter(t =>
-          t.number.toLowerCase().includes(query.toLowerCase()) ||
-          t.from.toLowerCase().includes(query.toLowerCase()) ||
-          t.to.toLowerCase().includes(query.toLowerCase())
-        )
-        .map(train => (
-          <div key={train.id} className="card">
-            <h3>{train.number}</h3>
-            <p>{train.from} → {train.to}</p>
-            <p>⏰ {train.departure}</p>
-            <p>⏳ {train.duration}</p>
-          </div>
+      {filtered.map(train => (
+        <div className="card" key={train.id}>
+          <h3>{train.number}</h3>
+          <p>{train.from} → {train.to}</p>
+          <p>{train.departure} · {train.duration}</p>
+        </div>
       ))}
 
     </div>
