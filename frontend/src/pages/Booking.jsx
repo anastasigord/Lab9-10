@@ -9,30 +9,20 @@ export default function Booking() {
     fetch("http://localhost:3000/api/trains")
       .then(res => res.json())
       .then(data => {
-        const found = data.find(t => t.id == id);
-        setTrain(found);
+        const found = data?.find(t => t.id == id);
+        setTrain(found || null);
       });
   }, [id]);
 
-  if (!train) return <div className="container">Loading...</div>;
+  if (!train) return <div>Loading...</div>;
 
   return (
     <div className="container">
-
-      <h1 className="title">Booking page</h1>
-
+      <h1>Booking</h1>
       <div className="card">
-        <h3>{train.number}</h3>
-
-        <p>From: {train.from}</p>
-        <p>To: {train.to}</p>
-
-        <p>Departure: {train.departure}</p>
-        <p>Duration: {train.duration}</p>
+        <p>{train.number}</p>
+        <p>{train.from} → {train.to}</p>
       </div>
-
-      <button>Confirm booking</button>
-
     </div>
   );
 }
