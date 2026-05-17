@@ -1,21 +1,33 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+export default function Home() {
+  const [trains, setTrains] = useState([]);
+  const [query, setQuery] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const filtered = trainsMock.filter(
-      (train) =>
-        train.number.toLowerCase().includes(query.toLowerCase()) ||
-        train.from.toLowerCase().includes(query.toLowerCase()) ||
-        train.to.toLowerCase().includes(query.toLowerCase())
-    );
+    fetch("http://localhost:3000/api/trains")
+      .then((res) => res.json())
+      .then((data) => setTrains(data));
+  }, []);
 
-    setTrains(filtered);
-  }, [query]);
+  const filtered = trains.filter(
+    (t) =>
+      t.number.toLowerCase().includes(query.toLowerCase()) ||
+      t.from.toLowerCase().includes(query.toLowerCase()) ||
+      t.to.toLowerCase().includes(query.toLowerCase())
+  );
 
   return (
     <div className="page">
       <div className="container">
+
         <section className="hero">
-          <span className="hero-label">RAILWAY TICKET SALES SYSTEM</span>
+          <span className="hero-label">
+            RAILWAY TICKET SALES SYSTEM
+          </span>
 
           <h1>
             Пошук рейсів для
@@ -36,13 +48,17 @@ import { useEffect, useState } from "react";
         <section className="results">
           <div className="results-header">
             <span>ДОСТУПНІ РЕЙСИ</span>
-            <h2>{trains.length} знайдено</h2>
+            <h2>{filtered.length} знайдено</h2>
           </div>
 
           <div className="cards">
-            {trains.map((train) => (
+
+            {filtered.map((train) => (
               <div className="card" key={train.id}>
-                <div className="train-badge">Потяг {train.number}</div>
+
+                <div className="train-badge">
+                  Потяг {train.number}
+                </div>
 
                 <h3>
                   {train.from} → {train.to}
@@ -54,20 +70,23 @@ import { useEffect, useState } from "react";
                 </div>
 
                 <div className="info-block">
-                  <span>Прибуття</span>
-                  <strong>{train.arrival}</strong>
-                </div>
-
-                <div className="info-block">
                   <span>Тривалість</span>
                   <strong>{train.duration}</strong>
                 </div>
 
-                <button>Обрати рейс</button>
+                <button
+                  onClick={() => navigate(`/booking/${train.id}`)}
+                >
+                  Переглянути
+                </button>
+
               </div>
             ))}
+
           </div>
         </section>
+
       </div>
     </div>
   );
+}
