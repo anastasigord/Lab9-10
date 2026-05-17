@@ -16,4 +16,8 @@ status:"Railway backend running"
 
 });
 
+import cors from "cors";
+
+app.use(cors());
+
 module.exports=app;
