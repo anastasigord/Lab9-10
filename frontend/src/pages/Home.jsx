@@ -74,11 +74,11 @@ export default function Home() {
                   <strong>{train.duration}</strong>
                 </div>
 
-                <button
+               <button
                   onClick={() => navigate(`/booking/${train.id}`)}
-                >
-                  Переглянути
-                </button>
+>
+                      Обрати квиток
+               </button>
 
               </div>
             ))}
