@@ -1,14 +1,11 @@
 export default function TrainCard({ train }) {
   return (
-    <div className="border p-3 rounded mb-2">
+    <div className="card">
       <h3>🚆 {train.number}</h3>
 
-      <p>
-        {train.from} → {train.to}
-      </p>
-
-      <p>⏰ Відправлення: {train.departure}</p>
-      <p>⏳ Тривалість: {train.duration}</p>
+      <p>{train.from} → {train.to}</p>
+      <p>⏰ {train.departure}</p>
+      <p>⏳ {train.duration}</p>
     </div>
   );
 }
