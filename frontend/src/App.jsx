@@ -1,12 +1,14 @@
-import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Booking from "./pages/Booking";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HomePage from "./pages/Home";
 
-export default function App() {
+function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/booking/:id" element={<Booking />} />
-    </Routes>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
+
+export default App;

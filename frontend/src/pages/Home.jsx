@@ -1,52 +1,73 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
-export default function Home() {
-  const [trains, setTrains] = useState([]);
-  const [query, setQuery] = useState("");
-
-  const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/trains")
-      .then(res => res.json())
-      .then(data => setTrains(data));
-  }, []);
+    const filtered = trainsMock.filter(
+      (train) =>
+        train.number.toLowerCase().includes(query.toLowerCase()) ||
+        train.from.toLowerCase().includes(query.toLowerCase()) ||
+        train.to.toLowerCase().includes(query.toLowerCase())
+    );
 
-  const filtered = trains.filter(t =>
-    t.number.toLowerCase().includes(query.toLowerCase()) ||
-    t.from.toLowerCase().includes(query.toLowerCase()) ||
-    t.to.toLowerCase().includes(query.toLowerCase())
-  );
+    setTrains(filtered);
+  }, [query]);
 
   return (
-    <div className="container">
+    <div className="page">
+      <div className="container">
+        <section className="hero">
+          <span className="hero-label">RAILWAY TICKET SALES SYSTEM</span>
 
-      <div className="title">Railway Ticket System</div>
+          <h1>
+            Пошук рейсів для
+            <br />
+            бронювання квитків
+          </h1>
 
-      <input
-        placeholder="Search by number or route"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
+          <p>Пошук за номером потяга або маршрутом</p>
 
-      {filtered.map(train => (
-        <div className="card" key={train.id}>
-          
-          <h3>{train.number}</h3>
+          <input
+            type="text"
+            placeholder="Наприклад: 091К або Київ"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </section>
 
-          <p>{train.from} → {train.to}</p>
-          <p>{train.departure} · {train.duration}</p>
+        <section className="results">
+          <div className="results-header">
+            <span>ДОСТУПНІ РЕЙСИ</span>
+            <h2>{trains.length} знайдено</h2>
+          </div>
 
-          <button
-            onClick={() => navigate(`/booking/${train.id}`)}
-          >
-            View details
-          </button>
+          <div className="cards">
+            {trains.map((train) => (
+              <div className="card" key={train.id}>
+                <div className="train-badge">Потяг {train.number}</div>
 
-        </div>
-      ))}
+                <h3>
+                  {train.from} → {train.to}
+                </h3>
 
+                <div className="info-block">
+                  <span>Відправлення</span>
+                  <strong>{train.departure}</strong>
+                </div>
+
+                <div className="info-block">
+                  <span>Прибуття</span>
+                  <strong>{train.arrival}</strong>
+                </div>
+
+                <div className="info-block">
+                  <span>Тривалість</span>
+                  <strong>{train.duration}</strong>
+                </div>
+
+                <button>Обрати рейс</button>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
     </div>
   );
-}
